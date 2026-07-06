@@ -99,16 +99,6 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 
 ---
 
-## 🛠 技术栈速览
-
-- **后端**：Spring Boot 3.3 + Java 17 + MyBatis Plus 3.5 + Sa-Token 1.39（JWT 模式）
-- **前端**：Vue 3.5 + TypeScript 5.7 + Naive UI 2.41 + Vite 6
-- **数据库**：MySQL 8.0 + Redis 7
-- **API 文档**：Knife4j 4.5（OpenAPI 3）
-- **特色**：SSE 实时推送 + 老虎机数字动画 / 玻璃拟态 UI
-
-完整 14 个后端模块、12 张数据表、3 套负载均衡策略、套餐 + 邀请 + 支付 + 审计 + 告警全栈自包含。
-
 ---
 
 ## 📚 链接
@@ -116,7 +106,6 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 | 入口 | 链接 |
 |---|---|
 | 🌐 官网 | https://tavily.sharyuke.com |
-| 📖 在线 API 文档 | https://tavily.sharyuke.com/api/doc.html |
 | 👤 用户端控制台 | https://tavily.sharyuke.com/dashboard |
 
 ---
