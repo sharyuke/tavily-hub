@@ -24,7 +24,6 @@
 | 凭据裸放在数据库怕泄露 | **AES-256-GCM** 加密存储 + **SHA-256** 查重 |
 | 踩到限流 (`429`) | 自动切下一个号池账号，业务完全无感 |
 | 没"计费 / 套餐 / 支付"基础设施 | 5 档套餐 · Credit 池 · 支付宝 PC 网站支付 · 订单管理 |
-| 没有可视化后台 | 完整 Web 管理后台（用户 / 号池 / 订单 / 告警 / 审计 / 设置 全有） |
 
 **一句话**：把 Tavily 当水电煤用 — 你只需要一个 `thb-` 开头的 Key，背后发生什么我们来处理。
 
@@ -119,7 +118,6 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 | 🌐 官网 | https://tavily.sharyuke.com |
 | 📖 在线 API 文档 | https://tavily.sharyuke.com/api/doc.html |
 | 👤 用户端控制台 | https://tavily.sharyuke.com/dashboard |
-| 🛠 管理后台 | https://tavily.sharyuke.com/admin |
 
 ---
 
