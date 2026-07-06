@@ -124,7 +124,7 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 ## 📬 反馈与联系
 
 - 官网右下角在线客服
-- 邮件：admin@tavily-hub.com（占位，请通过官网联系）
+- 邮件：sharyuke@sharyuke.com
 - 提交 Issue：https://github.com/sharyuke/tavily-hub/issues
 
 ---
