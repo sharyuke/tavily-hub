@@ -2,11 +2,11 @@
 
 # 🌐 Tavily Hub
 
-**1 个 Hub Key，背后 N 个 Tavily 账号。用得越快，回得越快。**
+**1 个 Hub Key，背后 N 个 Tavily 账号。**
 
 为国内 AI 开发者打造的 **Tavily 统一代理网关 + Credit 池 + MCP 一键接入**
 
-**🪪 无需国际信用卡　·　🧠 国内直连　·　⚡ MCP streamableHTTP + SSE 双协议　·　💰 支付宝按量付费**
+**🪪 无需国际信用卡　·　🧠 国内直连　·　⚡ MCP streamableHTTP + SSE 双协议**
 
 👉 **官网：[https://tavily.sharyuke.com](https://tavily.sharyuke.com/)**
 
@@ -20,38 +20,30 @@
 
 > **注册 Tavily 需要海外信用卡，门槛高、续费难、经常被风控。**
 
-Tavily Hub 就是为了把这道坎彻底拆掉 —— **支付宝扫码就能用，没有国际信用卡也能稳定、大量地调用 Tavily 搜索。**
+Tavily Hub 就是为了把这道坎彻底拆掉 —— **通过 thb- Key 即可稳定、大量地调用 Tavily 搜索，无需海外账号、无需信用卡。**
 
 | 你遇到的坎 | Tavily Hub 的解法 |
 |---|---|
-| ❌ 注册 Tavily 需要 Visa / MasterCard | ✅ **支付宝扫码付费**，几分钟开通，人民币结算 |
 | ❌ 单账号配额很快触顶 (`429 Too Many Requests`) | ✅ 后端聚合 **N 个 Tavily 账号形成号池**，自动轮询 / 权重 / 最少使用调度 |
-| ❌ 想大量调用但又怕单账号超限 | ✅ **Credit 池 + 定时回充** 模型，池容量可堆，用量上不封顶（按套餐计） |
+| ❌ 想大量调用但又怕单账号超限 | ✅ **Credit 池 + 定时回充** 模型，池容量可堆，用量上不封顶 |
 | ❌ 想给团队分发 Key 又怕滥用 | ✅ 每个用户独立 `thb-` Key + IP 白名单 + 用量配额 + 全量请求日志 |
 | ❌ Claude Desktop / Cursor 想直接调 Tavily | ✅ 一行配置接入 **MCP 端点** `/api/mcp`（默认 streamableHTTP，老 SSE 也兼容） |
 | ❌ 凭据裸放在数据库怕泄露 | ✅ **AES-256-GCM** 加密存储 + **SHA-256** 查重 |
-| ❌ 想要完整的"计费 / 套餐 / 订单"基础设施 | ✅ 5 档套餐 · Credit 池 · 支付宝 PC 网站支付 · 订单管理后台 |
 
 **一句话**：把 Tavily 当水电煤用 —— 你只需要一个 `thb-` 开头的 Key，背后发生什么我们来处理。
 
 ---
 
-## 🔥 三大招牌功能
+## 🔥 两大招牌功能
 
-### 1. 🪪 无需国际信用卡，支付宝就能用
-- ✅ 支持 **支付宝 PC 网站支付**（当面付），人民币结算，**几分钟开通、即开即用**
-- ✅ 5 档套餐（免费 / 基础 / 专业 / 团队 / 企业），覆盖从尝鲜到大规模生产
-- ✅ 邀请制注册（管理员可临时关闭），平台稳定可控
-- ✅ 适合 **没有国际信用卡 / 不方便用海外卡 / 想按月控制成本** 的个人与团队
-
-### 2. 💧 Credit 池 ——"用得越快，回得越快"
+### 1. 💧 Credit 池
 区别于官方"每月固定配额"的死板模型，Hub 用 **Credit 池 + 定时回充**：
-- 套餐决定 **池容量** + **回充速率**（例如 Pro：池容量 100，每分钟回 +2）
+- 默认池容量 **100**，每分钟回充 **+2** Credit
 - 每次调用按 Tavily 上游返回的 `usage.credits` 原子扣减
 - 前端 **SSE 实时推送 + 老虎机数字动画**，肉眼可见地在跳动
 - 配合号池调度，**大流量场景也能扛得住**
 
-### 3. 🧠 MCP 一键接入：streamableHTTP + SSE 双协议
+### 2. 🧠 MCP 一键接入：streamableHTTP + SSE 双协议
 - ✅ **默认 `/api/mcp` 走 streamableHTTP**（MCP 2025-03-26 新协议，性能更好、断线重连更稳）
 - ✅ **老协议 `/api/mcp/sse` 同样兼容**（SSE，适配老版本 Claude Desktop / Cursor）
 - ✅ 自动注册两个工具：`tavily_search` 与 `tavily_extract`
@@ -203,20 +195,6 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 
 ---
 
-## 💰 套餐价格
-
-| 套餐 | 价格 | 池容量 | 回充速率 | 自带 Key 上限 |
-|---|:-:|:-:|:-:|:-:|
-| 免费版 | ¥0 | 10 | 5 / 小时 | ❌ 不允许 |
-| 基础版 | ¥5 / 月 | 100 | 1 / 分钟 | 10 |
-| 专业版 | ¥10 / 月 | 100 | 2 / 分钟 | 20 |
-| 团队版 | ¥10 / 月 | 200 | 1 / 分钟 | 20 |
-| 企业版 | 15 / 月 | 200 | 2 / 分钟 | 30 |
-
-支付方式：**支付宝 PC 网站支付**。邀请制注册（管理员可临时关闭）。
-
----
-
 ## 🔌 自带 Tavily Key · 自费通道
 你已经有自己的 Tavily Key 了？把它们全部加进 Tavily Hub：
 - ✅ **平台零扣费** — Credit 池一动不动
@@ -227,7 +205,7 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 
 | 场景 | 走哪条路径 | 扣 Credit | 限频 |
 |---|---|:-:|:-:|
-| 你**没有**自带 Key | 系统号池（自动调度 N 个平台账号）| ✅ 按 Tavily 上游 `usage.credits` | ✅ 受套餐池容量约束 |
+| 你**没有**自带 Key | 系统号池（自动调度 N 个平台账号）| ✅ 按 Tavily 上游 `usage.credits` | ✅ 受池容量约束 |
 | 你**有**自带 Key | **你的 Key 之间自动负载均衡** | ❌ 自费 | ❌ **完全不限** |
 
 ---
@@ -251,9 +229,7 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 
 <div align="center">
 
-**国内访问速度优化 · 中文 UI · 中文文档 · 支付宝支付 · 邀请制注册**
-
-**🪪 无需国际信用卡，支付宝即开即用 · 大量使用 Tavily 搜索，从此不再为卡发愁**
+**国内访问速度优化 · 中文 UI · 中文文档**
 
 [立即注册 https://tavily.sharyuke.com/register](https://tavily.sharyuke.com/register) · [查看 API 文档](https://tavily.sharyuke.com/api/doc.html)
 
