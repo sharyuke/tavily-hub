@@ -2,7 +2,7 @@
 
 # 🌐 Tavily Hub
 
-**1 个 Hub Key，背后 N 个 Tavily 账号。**
+**1 个 Hub Key，平台自有搜索后端。**
 
 为国内 AI 开发者打造的 **Tavily 统一代理网关 + Credit 池 + MCP 一键接入**
 
@@ -24,7 +24,7 @@ Tavily Hub 就是为了把这道坎彻底拆掉 —— **通过 thb- Key 即可�
 
 | 你遇到的坎 | Tavily Hub 的解法 |
 |---|---|
-| ❌ 单账号配额很快触顶 (`429 Too Many Requests`) | ✅ 后端聚合 **N 个 Tavily 账号形成号池**，自动轮询 / 权重 / 最少使用调度 |
+| ❌ 单账号配额很快触顶 (`429 Too Many Requests`) | ✅ 平台自建搜索后端，**高可用 + 大容量**承接 |
 | ❌ 想大量调用但又怕单账号超限 | ✅ **Credit 池 + 定时回充** 模型，池容量可堆，用量上不封顶 |
 | ❌ 想给团队分发 Key 又怕滥用 | ✅ 每个用户独立 `thb-` Key + IP 白名单 + 用量配额 + 全量请求日志 |
 | ❌ Claude Desktop / Cursor 想直接调 Tavily | ✅ 一行配置接入 **MCP 端点** `/api/mcp`（默认 streamableHTTP，老 SSE 也兼容） |
@@ -41,13 +41,13 @@ Tavily Hub 就是为了把这道坎彻底拆掉 —— **通过 thb- Key 即可�
 - 默认池容量 **100**，每分钟回充 **+2** Credit
 - 每次调用按 Tavily 上游返回的 `usage.credits` 原子扣减
 - 前端 **SSE 实时推送 + 老虎机数字动画**，肉眼可见地在跳动
-- 配合号池调度，**大流量场景也能扛得住**
+- **大流量场景也能扛得住**，池容量随用量增长
 
 ### 2. 🧠 MCP 一键接入：streamableHTTP + SSE 双协议
 - ✅ **默认 `/api/mcp` 走 streamableHTTP**（MCP 2025-03-26 新协议，性能更好、断线重连更稳）
 - ✅ **老协议 `/api/mcp/sse` 同样兼容**（SSE，适配老版本 Claude Desktop / Cursor）
 - ✅ 自动注册三个工具：`tavily_search`、`tavily_extract`、`tavily_crawl`（`/crawl` · 站点爬取）
-- ✅ **MCP 通道也走号池** —— 不管走 HTTP 代理还是 MCP，调度逻辑完全一致
+- ✅ **MCP 通道同样走平台自建搜索**，HTTP 代理与 MCP 共用一套后端
 - ✅ 客户端无需改一行代码，**换 URL 协议即可升级**
 
 ---
@@ -205,7 +205,7 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 
 | 场景 | 走哪条路径 | 扣 Credit | 限频 |
 |---|---|:-:|:-:|
-| 你**没有**自带 Key | 系统号池（自动调度 N 个平台账号）| ✅ 按 Tavily 上游 `usage.credits` | ✅ 受池容量约束 |
+| 你**没有**自带 Key | **平台自建搜索后端** | ✅ 按 Tavily 上游 `usage.credits` | ✅ 受池容量约束 |
 | 你**有**自带 Key | **你的 Key 之间自动负载均衡** | ❌ 自费 | ❌ **完全不限** |
 
 ---
