@@ -46,7 +46,7 @@ Tavily Hub 就是为了把这道坎彻底拆掉 —— **通过 thb- Key 即可�
 ### 2. 🧠 MCP 一键接入：streamableHTTP + SSE 双协议
 - ✅ **默认 `/api/mcp` 走 streamableHTTP**（MCP 2025-03-26 新协议，性能更好、断线重连更稳）
 - ✅ **老协议 `/api/mcp/sse` 同样兼容**（SSE，适配老版本 Claude Desktop / Cursor）
-- ✅ 自动注册三个工具：`tavily_search`、`tavily_extract`、`tavily_crawl`（`/crawl` · 站点爬取）
+- ✅ 自动注册工具：`search`、`extract`、`crawl`、`map`，以及 `usage`（查询剩余 credit，不扣费）
 - ✅ **MCP 通道同样走平台自建搜索**，HTTP 代理与 MCP 共用一套后端
 - ✅ 客户端无需改一行代码，**换 URL 协议即可升级**
 
@@ -67,6 +67,11 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
   -H "Authorization: Bearer thb-你的key" \
   -H "Content-Type: application/json" \
   -d '{"query":"国内 AI 开源项目推荐"}'
+
+# 4. 查询剩余 credit（不扣费）
+#    data.remaining 剩余可用，maxCredits 池大小，prepaidCredits 备用，creditsUsed 已消耗
+curl https://tavily.sharyuke.com/api/proxy/usage \
+  -H "Authorization: Bearer thb-你的key"
 ```
 
 ### 方式 B：一键接入 MCP（主流 AI Agent 全家桶）
@@ -191,7 +196,7 @@ curl -X POST https://tavily.sharyuke.com/api/proxy/search \
 
 > **老协议永不淘汰**：只要你的客户端只认 SSE，把 URL 末尾加 `/sse` 就能用，**同一个 thb- Key 无需更换**。
 
-接入成功后，所有客户端都能看到三个工具：`tavily_search`、`tavily_extract`、`tavily_crawl`（`/crawl` · 站点爬取）。
+接入成功后，客户端能看到 `search`、`extract`、`crawl`、`map`，以及 `usage`（剩余可用 credit、套餐池大小、备用 credit、已消耗；不扣费）。
 
 ---
 
